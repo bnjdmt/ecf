@@ -1,0 +1,64 @@
+{# templates/quiz/index.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{#    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">#}
+{#        <div class="card w-50 custom-card">#}
+{#            <div class="card-header">#}
+{#                <h4>Quiz Adventure</h4>#}
+{#            </div>#}
+{#            <div class="card-body">#}
+{#                {{ form_start(form) }}#}
+{#                <h5 class="card-title">{{ question }}</h5>#}
+{#                <div class="form-group">#}
+{#                    {{ form_label(form.choices, null, {'label_attr': {'class': 'form-label'}}) }}#}
+{#                    <div class="row">#}
+{#                        {% for child in form.choices %}#}
+{#                            <div class="col-md-6 form-check">#}
+{#                                {{ form_widget(child, {'attr': {'class': 'form-check-input'}}) }}#}
+{#                                {{ form_label(child, null, {'label_attr': {'class': 'form-check-label'}}) }}#}
+{#                            </div>#}
+{#                        {% endfor %}#}
+{#                    </div>#}
+{#                </div>#}
+{#                {{ form_widget(form.correctAnswer) }}#}
+{#                <button type="submit" class="btn btn-secondary">Save</button>#}
+{#                {{ form_end(form) }}#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+
+        <h1>Quiz Aventure</h1>
+        <form action="{{ path('quiz_submit') }}" method="post">
+            {% for question in questions %}
+                <div>
+                    <p>{{ question.questionText }}</p>
+                    {% for choice in question.choices %}
+                        <input type="radio" name="question_{{ question.id }}" value="{{ choice }}">{{ choice }}<br>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+            <button type="submit">Submit</button>
+        </form>
+
+
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.addEventListener('change', function () {
+                    if (this.checked) {
+                        checkboxes.forEach((cb) => {
+                            if (cb !== this) {
+                                cb.checked = false;
+                            }
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}
